@@ -3,7 +3,7 @@ import requests
 
 def post_with_fallback(json_data):
     urls = [
-        "https://your-fastapi-app.up.railway.app/predict",  
+        "https://mduasapi-production.up.railway.app/predict",  
         "http://localhost:8000/predict"
     ]
 
