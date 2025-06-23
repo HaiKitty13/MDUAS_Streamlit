@@ -19,126 +19,269 @@ def post_with_fallback(json_data):
 
 st.set_page_config(
     page_title="Obesity Level Predictor",
-    page_icon="🏥",
+    page_icon="🌸",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
 st.markdown("""
 <style>
-    /* Main background */
-    .main {
-        background: linear-gradient(135deg, #ffb3d9 0%, #ff99cc 50%, #ff80c0 100%);
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    /* Global font */
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif;
     }
     
-    /* Header styling */
+    /* Main background with subtle gradient */
+    .main {
+        background: linear-gradient(135deg, #fef7f7 0%, #fdf2f8 25%, #fce7f3 50%, #fbcfe8 75%, #f9a8d4 100%);
+        min-height: 100vh;
+    }
+    
+    /* Remove default padding */
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+    
+    /* Header styling with elegant soft pink */
     .header-container {
-        background: linear-gradient(90deg, #ff1a8c, #ff4da6);
-        padding: 2rem;
-        border-radius: 15px;
-        margin-bottom: 2rem;
-        box-shadow: 0 8px 32px rgba(255, 26, 140, 0.3);
+        background: linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #f9a8d4 100%);
+        padding: 3rem 2rem;
+        border-radius: 25px;
+        margin-bottom: 3rem;
+        box-shadow: 0 20px 40px rgba(236, 72, 153, 0.15);
         text-align: center;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
     }
     
     .main-title {
         color: white;
-        font-size: 3rem;
-        font-weight: bold;
+        font-size: 3.5rem;
+        font-weight: 700;
         margin: 0;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        letter-spacing: -0.02em;
     }
     
     .creator-name {
-        color: #ffe6f2;
-        font-size: 1.2rem;
-        margin-top: 0.5rem;
-        font-style: italic;
+        color: #fdf2f8;
+        font-size: 1.1rem;
+        margin-top: 1rem;
+        font-weight: 400;
+        opacity: 0.9;
     }
     
-    /* Tab styling */
+    /* Tab styling with soft pink theme */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        padding: 5px;
+        gap: 12px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(253, 242, 248, 0.8));
+        border-radius: 20px;
+        padding: 8px;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(236, 72, 153, 0.1);
     }
     
     .stTabs [data-baseweb="tab"] {
-        background-color: rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-        color: #8B008B;
-        font-weight: bold;
-        border: 2px solid transparent;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        background-color: white;
-        color: #ff1a8c;
-        border: 2px solid #ff1a8c;
-    }
-    
-    /* Form styling */
-    .stForm {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 2rem;
+        background: transparent;
         border-radius: 15px;
-        box-shadow: 0 8px 32px rgba(255, 26, 140, 0.2);
-        margin: 1rem 0;
-    }
-    
-    /* Button styling */
-    .stButton > button {
-        background: linear-gradient(90deg, #ff1a8c, #ff4da6);
-        color: white;
-        border: none;
-        border-radius: 25px;
-        padding: 0.75rem 2rem;
-        font-weight: bold;
-        font-size: 1.1rem;
-        box-shadow: 0 4px 15px rgba(255, 26, 140, 0.4);
+        color: #be185d;
+        font-weight: 500;
+        border: 2px solid transparent;
+        padding: 12px 24px;
         transition: all 0.3s ease;
     }
     
-    .stButton > button:hover {
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, #f9a8d4, #fbbf24);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 25px rgba(236, 72, 153, 0.2);
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 26, 140, 0.6);
     }
     
-    /* Info boxes */
+    /* Form styling with glass morphism effect */
+    .stForm {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(253, 242, 248, 0.8));
+        padding: 2.5rem;
+        border-radius: 25px;
+        box-shadow: 0 25px 50px rgba(236, 72, 153, 0.1);
+        margin: 2rem 0;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Input field styling */
+    .stSelectbox > div > div {
+        background: rgba(255, 255, 255, 0.8);
+        border: 2px solid rgba(236, 72, 153, 0.1);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+    
+    .stSelectbox > div > div:hover {
+        border-color: rgba(236, 72, 153, 0.3);
+        box-shadow: 0 4px 15px rgba(236, 72, 153, 0.1);
+    }
+    
+    .stNumberInput > div > div > input {
+        background: rgba(255, 255, 255, 0.8);
+        border: 2px solid rgba(236, 72, 153, 0.1);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+    
+    .stNumberInput > div > div > input:focus {
+        border-color: #ec4899;
+        box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+    }
+    
+    /* Button styling with elegant gradient */
+    .stButton > button {
+        background: linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #f9a8d4 100%);
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 1rem 3rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(236, 72, 153, 0.4);
+        background: linear-gradient(135deg, #db2777 0%, #ec4899 50%, #f472b6 100%);
+    }
+    
+    /* Info boxes with soft pink elegance */
     .info-box {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 1rem 0;
-        border-left: 5px solid #ff1a8c;
-        box-shadow: 0 4px 15px rgba(255, 26, 140, 0.2);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(253, 242, 248, 0.8));
+        padding: 2.5rem;
+        border-radius: 25px;
+        margin: 2rem 0;
+        border-left: 6px solid #f9a8d4;
+        box-shadow: 0 20px 40px rgba(236, 72, 153, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
     
-    /* Success/Error messages */
+    /* Section headers */
+    .stMarkdown h3 {
+        color: #be185d;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+        border-bottom: 2px solid #fce7f3;
+        padding-bottom: 0.5rem;
+    }
+    
+    .stMarkdown h2 {
+        color: #be185d;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+    }
+    
+    /* Success/Error messages with soft styling */
     .stSuccess {
-        background: linear-gradient(90deg, #ff80c0, #ffb3d9);
-        color: #8B008B;
-        border-radius: 10px;
+        background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+        color: #166534;
+        border-radius: 15px;
+        border: 1px solid #86efac;
+        box-shadow: 0 8px 25px rgba(34, 197, 94, 0.1);
     }
     
     .stError {
-        background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
-        border-radius: 10px;
+        background: linear-gradient(135deg, #fef2f2, #fecaca);
+        color: #dc2626;
+        border-radius: 15px;
+        border: 1px solid #fca5a5;
+        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.1);
+    }
+    
+    .stWarning {
+        background: linear-gradient(135deg, #fffbeb, #fed7aa);
+        color: #d97706;
+        border-radius: 15px;
+        border: 1px solid #fdba74;
+        box-shadow: 0 8px 25px rgba(245, 158, 11, 0.1);
+    }
+    
+    .stInfo {
+        background: linear-gradient(135deg, #f0f9ff, #dbeafe);
+        color: #1e40af;
+        border-radius: 15px;
+        border: 1px solid #93c5fd;
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.1);
+    }
+    
+    /* Metrics styling */
+    .stMetric {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(253, 242, 248, 0.6));
+        padding: 1.5rem;
+        border-radius: 20px;
+        border: 1px solid rgba(236, 72, 153, 0.1);
+        box-shadow: 0 10px 25px rgba(236, 72, 153, 0.05);
+        backdrop-filter: blur(10px);
+    }
+    
+    /* Spinner customization */
+    .stSpinner > div {
+        border-top-color: #ec4899 !important;
+    }
+    
+    /* Form submit button container */
+    .stForm > div:last-child {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+    
+    /* Smooth animations */
+    * {
+        transition: all 0.3s ease;
+    }
+    
+    /* Hide Streamlit menu and footer */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #fdf2f8;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #f9a8d4, #ec4899);
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #ec4899, #db2777);
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Header
+# Header with elegant design
 st.markdown("""
 <div class="header-container">
-    <h1 class="main-title">Obesity Level Predictor</h1>
+    <h1 class="main-title">🌸 Obesity Level Predictor</h1>
     <p class="creator-name">Created by: 2702212250 - Ni Komang Gayatri Kusuma Wardhani</p>
 </div>
 """, unsafe_allow_html=True)
 
 # Create tabs
-tab1, tab2 = st.tabs(["Model Information", "Prediction Tool"])
+tab1, tab2 = st.tabs(["📊 Model Information", "🔮 Prediction Tool"])
 
 with tab1:
     st.markdown('<div class="info-box">', unsafe_allow_html=True)
@@ -185,7 +328,7 @@ with tab1:
 
 with tab2:
     st.markdown('<div class="info-box">', unsafe_allow_html=True)
-    st.markdown("## Obesity Level Prediction")
+    st.markdown("## 🌸 Obesity Level Prediction")
     st.markdown("Fill out the following form to predict obesity level based on your lifestyle features and body data.")
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -193,33 +336,33 @@ with tab2:
         col1, col2 = st.columns(2)
         
         with col1:
-            st.markdown("### Demographic Data")
+            st.markdown("### 👤 Demographic Data")
             Gender = st.selectbox("Gender", ["Male", "Female"]) 
             Age = st.number_input("Age", min_value=0.0, max_value=120.0, step=1.0) 
             Height = st.number_input("Height (in meters)", min_value=1.0, max_value=2.5, step=0.01) 
             Weight = st.number_input("Weight (in kg)", min_value=20.0, max_value=200.0, step=0.1) 
             family_history_with_overweight = st.selectbox("Family History of Overweight", ["yes", "no"])
             
-            st.markdown("### Lifestyle Habits")
+            st.markdown("### 🚬 Lifestyle Habits")
             SMOKE = st.selectbox("Do you smoke?", ["yes", "no"]) 
             SCC = st.selectbox("Do you monitor your calorie consumption?", ["yes", "no"]) 
             CALC = st.selectbox("Alcohol Consumption", ["no", "Sometimes", "Frequently", "Always"]) 
             MTRANS = st.selectbox("Transportation Used", ["Public_Transportation", "Walking", "Bike", "Motorbike", "Automobile"])
         
         with col2:
-            st.markdown("### Eating Habits")
+            st.markdown("### 🍽️ Eating Habits")
             FAVC = st.selectbox("Frequent Consumption of High Caloric Food (FAVC)", ["yes", "no"]) 
             FCVC = st.number_input("Frequency of Vegetable Consumption (FCVC)", min_value=0.0, max_value=3.0, step=0.1) 
             NCP = st.number_input("Number of Main Meals (NCP)", min_value=1.0, max_value=5.0, step=0.5) 
             CAEC = st.selectbox("Consumption of Food Between Meals (CAEC)", ["no", "Sometimes", "Frequently", "Always"]) 
             CH2O = st.number_input("Daily Water Intake (liters) (CH2O)", min_value=0.0, max_value=5.0, step=0.1)
             
-            st.markdown("### Physical Activity")
+            st.markdown("### 🏃‍♀️ Physical Activity")
             FAF = st.number_input("Physical Activity Frequency per week (FAF)", min_value=0.0, max_value=5.0, step=0.1) 
             TUE = st.number_input("Time using technology devices (hours/day) (TUE)", min_value=0.0, max_value=24.0, step=0.5)
         
         st.markdown("<br>", unsafe_allow_html=True)
-        submitted = st.form_submit_button("Predict Obesity Level", use_container_width=True) 
+        submitted = st.form_submit_button("🌸 Predict Obesity Level", use_container_width=True) 
     
     if submitted: 
         features = { 
@@ -242,30 +385,30 @@ with tab2:
         } 
     
         try: 
-            with st.spinner('Processing prediction...'):
+            with st.spinner('✨ Processing prediction...'):
                 result, used_url = post_with_fallback(features) 
         
                 if "error" in result: 
-                    st.error(f"Prediction failed: {result['error']}") 
+                    st.error(f"🚫 Prediction failed: {result['error']}") 
                 else: 
-                    st.success(f"**Predicted Obesity Level: {result['prediction_label']}**") 
+                    st.success(f"**🎯 Predicted Obesity Level: {result['prediction_label']}**") 
                     
                     col1, col2, col3 = st.columns(3)
                     with col1:
-                        st.metric("BMI Calculated", f"{Weight/(Height**2):.2f}")
+                        st.metric("📊 BMI Calculated", f"{Weight/(Height**2):.2f}")
                     with col2:
-                        st.metric("Encoded Label", result['prediction_encoded'])
+                        st.metric("🏷️ Encoded Label", result['prediction_encoded'])
                     with col3:
-                        st.metric("Confidence", "High")
+                        st.metric("🎯 Confidence", "High")
                     
-                    st.markdown("### Recommendations:")
+                    st.markdown("### 💡 Recommendations:")
                     if "Normal" in result['prediction_label']:
-                        st.info("Great! Maintain your current healthy lifestyle.")
+                        st.info("🌟 Great! Maintain your current healthy lifestyle.")
                     elif "Insufficient" in result['prediction_label']:
-                        st.warning("Consider consulting a nutritionist for healthy weight gain strategies.")
+                        st.warning("⚖️ Consider consulting a nutritionist for healthy weight gain strategies.")
                     else:
-                        st.warning("Consider consulting healthcare professionals and adopting healthier lifestyle habits.")
+                        st.warning("🏥 Consider consulting healthcare professionals and adopting healthier lifestyle habits.")
         
         except requests.exceptions.RequestException as e: 
-            st.error(f"API Request failed: {str(e)}")
-            st.info("Make sure your API server is running on http://localhost:8000")
+            st.error(f"🚫 API Request failed: {str(e)}")
+            st.info("💡 Make sure your API server is running on http://localhost:8000")
